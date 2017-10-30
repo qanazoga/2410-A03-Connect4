@@ -15,6 +15,7 @@ namespace Connect4
     {
         public HeroTurn TurnCycle { get; set; }     
         public int PlacedPieces { get; set; }
+        public int MaxColumnHeight { get; set; }
         public Boolean GameOver { get; private set; }
 
         private static GameStateManager instance = null;
@@ -25,7 +26,7 @@ namespace Connect4
         private GameStateManager()
         {
             Random rand = new Random();
-            TurnCycle = (HeroTurn)rand.Next(2); // Select a random player to go first.
+            TurnCycle = (HeroTurn)rand.Next(0,2); // Select a random player to go first, wouldn't pick 0 unless I included it ¯\_(ツ)_/¯
             PlacedPieces = 0;
             GameOver = false;
         }
