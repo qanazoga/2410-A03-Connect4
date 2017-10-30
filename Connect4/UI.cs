@@ -34,6 +34,10 @@ namespace Connect4
             }
         }
 
+        /// <summary>
+        /// Returns the single instance of the UI.
+        /// </summary>
+        /// <returns>UI</returns>
         public static UI GetInstance()
         {
             if (instance == null)

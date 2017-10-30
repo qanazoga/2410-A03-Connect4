@@ -19,6 +19,9 @@ namespace Connect4
 
         private static GameStateManager instance = null;
 
+        /// <summary>
+        /// Returns the single instance of the GameStateManager.
+        /// </summary>
         private GameStateManager()
         {
             Random rand = new Random();
