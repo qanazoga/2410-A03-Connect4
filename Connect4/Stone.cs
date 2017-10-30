@@ -5,11 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Connect4
-{
+{   
+    /// <summary>
+    /// A representation of the Stones dropped into the Connect4 board.
+    /// </summary>
     class Stone
     {
         public Color Color { get; set; }
-
 
         public Stone()
         {
@@ -22,5 +24,6 @@ namespace Connect4
         }
     }
 
-    public enum Color { None, Blue = 9, Red = 12 }; // Black magic in the works.
+    // Setting the values this way allows us to cast to ConsoleColor and have the colors we want.
+    public enum Color { None, Blue = 9, Red = 12 }; 
 }
