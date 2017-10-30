@@ -23,6 +23,7 @@ namespace Connect4
 
         private UI()
         {
+            Console.Title = "Connect4";
             Grid = new Stone[6, 7];
             for (int i = 0; i < Grid.GetLength(0); i++)
             {
