@@ -70,30 +70,13 @@ namespace Connect4
         /// <summary>
         /// Places a stone in the given column for whoever's turn it currently is.
         /// </summary>
-        /// <remarks>
-        /// Okay, the second line on this one (<code>gsm.TurnCycle = (HeroTurn) (1 - (int)gsm.TurnCycle);</code>) can be a bit hard to read.
-        /// Let's break it down.
-        /// 
-        /// <code>gsm.TurnCycle</code> is an Enum, whose underlying value is always 0 or 1.
-        /// Casting an Enum as Int will return the underlying value.
-        /// 
-        /// Next, if we have a number n where n is either 1 or 0
-        /// 1 - n will always equate to the other number (ie, if n = 1, 1 - n = 0; if n = 0, 1 - n = 1).
-        /// 
-        /// So <code>(1 - (int)gsm.TurnCycle)</code> will always evaluate as the opposite value of <code>gsm.TurnCycle</code>.
-        /// Next we cast that back to a <code>HeroTurn</code> so we can set <code>gsm.TurnCycle</code>
-        /// 
-        /// (We're flipping whose turn it is)
-        /// 
-        /// </remarks>
         /// <param name="column"></param>
         public void Place(int column)
         {
             // Create a stone of the current player's color at the base of the given column.
             //TODO: change 0 in next line to the last available slot in the column 
-            Grid[0, column] = new Stone(gsm.TurnCycle == HeroTurn.Hero1 ? Color.Red : Color.Blue); // oh no, I hope it doesn't get more complex.
-            // Switch the GameStateManager's TurnCycle to the next player's turn.
-            gsm.TurnCycle = (HeroTurn) (1 - (int)gsm.TurnCycle);   // WHAT
+            Grid[0, column] = new Stone(gsm.TurnCycle == HeroTurn.Hero1 ? Color.Red : Color.Blue);
+            gsm.NextTurn();
             Refresh();
         }
 

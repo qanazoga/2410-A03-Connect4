@@ -39,6 +39,11 @@ namespace Connect4
             }
             return instance;   
         }
+
+        public void NextTurn() 
+        { 
+            TurnCycle = (HeroTurn) (1 - (int)gsm.TurnCycle);
+        }
     }
 
     public enum HeroTurn { Hero1, Hero2 }
