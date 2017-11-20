@@ -58,6 +58,7 @@ namespace Connect4
                 }
                 Console.WriteLine();
             }
+            Console.BackgroundColor = ConsoleColor.Black;
             Console.WriteLine();
             if (!gsm.GameOver)
                 gsm.AcceptingInput = true;
@@ -74,11 +75,11 @@ namespace Connect4
             try 
             {
                 gsm.Grid[evaluator.FindNextAvailableSlot(column), column] = new Stone(gsm.TurnCycle == PlayerTurn.Player1 ? Color.Red : Color.Blue);
+                gsm.NextTurn();
             } catch (Exception) 
             {
                 Console.Beep();
             }
-            gsm.NextTurn();
             Refresh();
         }
 

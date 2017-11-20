@@ -46,7 +46,7 @@ namespace Connect4
                 if (key == ConsoleKey.RightArrow)
                 {
                     if (SelectedLocation == len - 1)
-                        SelectedLocation = 0;
+                        SelectedLocation = -1;
 
                     SelectedLocation++;
                 }

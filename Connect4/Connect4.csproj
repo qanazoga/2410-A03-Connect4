@@ -8,7 +8,7 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>Connect4</RootNamespace>
     <AssemblyName>Connect4</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
@@ -31,6 +31,9 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>Connect4.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
