@@ -66,6 +66,18 @@ namespace Connect4
             // TODO
         }
 
+        
+        public int FindNextAvailableSlot(int col) 
+        {
+            for (int i = 5; i >= 0; i--)
+            {
+                if (gsm.Grid[i, col].Color == Color.None)
+                {
+                    return i;
+                }
+            };
+            throw new Exception("That Column is Full!"); // I have no idea how to make my own Exception in this language lol.
+        }
 
     }
 }

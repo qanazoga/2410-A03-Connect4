@@ -9,29 +9,21 @@ namespace Connect4
     /// <summary>
     /// The UI's job is to:
     ///     Map the playing field (grid)
-    ///     show the Hero's where they're placing their stones
-    ///     inform the Hero's whose turn it is
+    ///     show the Player's where they're placing their stones
+    ///     inform the Player's whose turn it is
     ///     
     /// UI implements the singleton design pattern.
     /// </summary>
     class UI
     {
-        public Stone[,] Grid { get; set; }
         private GameStateManager gsm = GameStateManager.GetInstance();
+        private Evaluator evaluator = Evaluator.GetInstance();
         
         private static UI instance;
 
         private UI()
         {
             Console.Title = "Connect4";
-            Grid = new Stone[6, 7];
-            for (int i = 0; i < Grid.GetLength(0); i++)
-            {
-                for (int j = 0; j < Grid.GetLength(1); j++)
-                {
-                    Grid[i, j] = new Stone();
-                }
-            }
         }
 
         /// <summary>
@@ -52,19 +44,23 @@ namespace Connect4
         /// </summary>
         public void Refresh()
         {
+            Console.BackgroundColor = ConsoleColor.Black;
             Console.SetCursorPosition(0, 0);
             Console.WriteLine("Use the LEFT and RIGHT ARROW KEYS to move\nPress ENTER to drop your piece");
             Console.WriteLine($"It is currently {gsm.TurnCycle}'s turn");
             
-            for (int i = 0; i < Grid.GetLength(0); i++)
+            for (int i = 0; i < gsm.Grid.GetLength(0); i++)
             {
-                for (int j = 0; j < Grid.GetLength(1); j++)
+                for (int j = 0; j < gsm.Grid.GetLength(1); j++)
                 {
-                    Console.BackgroundColor = (ConsoleColor)Grid[i, j].Color;
+                    Console.BackgroundColor = (ConsoleColor) gsm.Grid[i, j].Color;
                     Console.Write("( )");
                 }
                 Console.WriteLine();
             }
+            Console.WriteLine();
+            if (!gsm.GameOver)
+                gsm.AcceptingInput = true;
         }
 
         /// <summary>
@@ -74,8 +70,14 @@ namespace Connect4
         public void Place(int column)
         {
             // Create a stone of the current player's color at the base of the given column.
-            //TODO: change 0 in next line to the last available slot in the column 
-            Grid[0, column] = new Stone(gsm.TurnCycle == HeroTurn.Hero1 ? Color.Red : Color.Blue);
+            // If a stone can't be placed in the slot, an alert beep will be played.
+            try 
+            {
+                gsm.Grid[evaluator.FindNextAvailableSlot(column), column] = new Stone(gsm.TurnCycle == PlayerTurn.Player1 ? Color.Red : Color.Blue);
+            } catch (Exception) 
+            {
+                Console.Beep();
+            }
             gsm.NextTurn();
             Refresh();
         }

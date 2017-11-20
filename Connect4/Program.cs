@@ -13,6 +13,7 @@ namespace Connect4
         {
             GameStateManager gsm = GameStateManager.GetInstance();
             UI ui = UI.GetInstance();
+            Controller controller = Controller.GetInstance();
 
             //Delete next line
             Random rand = new Random();
@@ -20,8 +21,9 @@ namespace Connect4
             while (!gsm.GameOver)
             {
                 ui.Refresh();
-                ui.Place(rand.Next(6));
-                Thread.Sleep(1000);
+                controller.Move();
+                //ui.Place(rand.Next(7));
+                //Thread.Sleep(1000);
             }
             
         }
