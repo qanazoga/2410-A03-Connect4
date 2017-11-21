@@ -18,7 +18,8 @@ namespace Connect4
     {
         private GameStateManager gsm = GameStateManager.GetInstance();
         private Evaluator evaluator = Evaluator.GetInstance();
-        
+        private Controller controller = Controller.GetInstance();
+
         private static UI instance;
 
         private UI()
@@ -48,12 +49,15 @@ namespace Connect4
             Console.SetCursorPosition(0, 0);
             Console.WriteLine("Use the LEFT and RIGHT ARROW KEYS to move\nPress ENTER to drop your piece");
             Console.WriteLine($"It is currently {gsm.TurnCycle}'s turn");
-            
+            Console.WriteLine();
+
+            DrawSelectedLocation();
+
             for (int i = 0; i < gsm.Grid.GetLength(0); i++)
             {
                 for (int j = 0; j < gsm.Grid.GetLength(1); j++)
                 {
-                    Console.BackgroundColor = (ConsoleColor) gsm.Grid[i, j].Color;
+                    Console.BackgroundColor = (ConsoleColor)gsm.Grid[i, j].Color;
                     Console.Write("( )");
                 }
                 Console.WriteLine();
@@ -72,15 +76,37 @@ namespace Connect4
         {
             // Create a stone of the current player's color at the base of the given column.
             // If a stone can't be placed in the slot, an alert beep will be played.
-            try 
+            try
             {
                 gsm.Grid[evaluator.FindNextAvailableSlot(column), column] = new Stone(gsm.TurnCycle == PlayerTurn.Player1 ? Color.Red : Color.Blue);
                 gsm.NextTurn();
-            } catch (Exception) 
+                gsm.PlacedPieces++;
+            }
+            catch (Exception)
             {
                 Console.Beep();
             }
             Refresh();
+        }
+
+        public void DrawSelectedLocation()
+        {
+            Console.ForegroundColor = ConsoleColor.Black;
+            for (int i = 0; i < controller.SelectedLocation; i++)
+            {
+                Console.Write("( )");
+            }
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.BackgroundColor = (ConsoleColor)(gsm.TurnCycle == PlayerTurn.Player1 ? Color.Red : Color.Blue);
+            Console.Write("( )");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.Black;
+            for (int i = controller.SelectedLocation; i < gsm.Grid.GetLength(1); i++)
+            {
+                Console.Write("( )");
+            }
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine();
         }
 
     }

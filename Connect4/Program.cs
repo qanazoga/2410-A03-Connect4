@@ -14,6 +14,7 @@ namespace Connect4
             GameStateManager gsm = GameStateManager.GetInstance();
             UI ui = UI.GetInstance();
             Controller controller = Controller.GetInstance();
+            Evaluator eval = Evaluator.GetInstance();
 
             //Delete next line
             Random rand = new Random();
@@ -21,11 +22,21 @@ namespace Connect4
             while (!gsm.GameOver)
             {
                 ui.Refresh();
-                controller.Move();
-                //ui.Place(rand.Next(7));
-                //Thread.Sleep(1000);
+
+                if (controller.Move())
+                {
+                    ui.Place(controller.SelectedLocation);
+                    eval.CheckForWins();
+                }
+
             }
-            
+            gsm.NextTurn();
+
+            // I love this line so much <3
+            Console.BackgroundColor = (ConsoleColor)(gsm.TurnCycle == PlayerTurn.Player1 ? Color.Red : Color.Blue);
+            Console.WriteLine($"{gsm.TurnCycle} wins!");
+            Thread.Sleep(1500);
+
         }
 
     }

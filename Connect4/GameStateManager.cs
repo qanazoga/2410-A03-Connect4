@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Connect4
 {
@@ -13,10 +17,10 @@ namespace Connect4
     /// </summary>
     class GameStateManager
     {
-        public PlayerTurn TurnCycle { get; set; }     
+        public PlayerTurn TurnCycle { get; set; }
         public int PlacedPieces { get; set; }
         public int MaxColumnHeight { get; set; }
-        public Boolean GameOver { get; private set; }
+        public Boolean GameOver { get; set; }
         public Stone[,] Grid { get; set; }
         public bool AcceptingInput { get; set; }
 
@@ -28,7 +32,7 @@ namespace Connect4
         private GameStateManager()
         {
             Random rand = new Random();
-            TurnCycle = (PlayerTurn)rand.Next(0,2); // Select a random player to go first, wouldn't pick 0 unless I included it ¯\_(ツ)_/¯
+            TurnCycle = (PlayerTurn)rand.Next(0, 2); // Select a random player to go first, wouldn't pick 0 unless I included it ¯\_(ツ)_/¯
             PlacedPieces = 0;
             GameOver = false;
             Grid = new Stone[6, 7];
@@ -48,12 +52,12 @@ namespace Connect4
             {
                 instance = new GameStateManager();
             }
-            return instance;   
+            return instance;
         }
 
-        public void NextTurn() 
-        { 
-            TurnCycle = (PlayerTurn) (1 - (int) TurnCycle);
+        public void NextTurn()
+        {
+            TurnCycle = (PlayerTurn)(1 - (int)TurnCycle);
         }
     }
 

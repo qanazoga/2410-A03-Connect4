@@ -30,30 +30,68 @@ namespace Connect4
 
             return instance;
         }
-        
+
         public void CheckForWins()
-        {   
+        {
             // It's impossible to win before this point, don't waste time checking for wins.
-            if (gsm.PlacedPieces < 7) return;
-            
+            if (gsm.PlacedPieces < 7)
+                return;
+
             CheckForHorizontalWins();
 
             // Again, there's no point in checking for wins vertically before a win that way can be acieved.
-            if (gsm.MaxColumnHeight < 4) return;
+            if (gsm.MaxColumnHeight < 4)
+                return;
+
             CheckForVerticalWins();
             CheckForDiagDownWins();
             CheckForDiagUpWins();
 
         }
-
+        
         public void CheckForHorizontalWins()
         {
-            // TODO
+            var stonesInRow = 0;
+            var last = Color.None;
+
+            for (int i = 0; i < gsm.Grid.GetLength(0); i++)
+            {
+                for (int j = 0; j < gsm.Grid.GetLength(1); j++)
+                {
+                    var current = gsm.Grid[i, j].Color;
+                    if (current == last && current != Color.None)
+                    {
+                        stonesInRow++;
+                        if (stonesInRow == 3)
+                            gsm.GameOver = true;
+                    }
+                        
+                    else
+                        stonesInRow = 0;
+
+                    last = gsm.Grid[i, j].Color;
+                }
+                if (stonesInRow >= 4)
+                    gsm.GameOver = true;
+
+            }
         }
+
 
         public void CheckForVerticalWins()
         {
-            // TODO
+            var stonesInCol = 0;
+            var last = Color.None;
+
+            for (int i = 0; i < gsm.Grid.GetLength(1); i++)
+            {
+                for (int j = gsm.Grid.GetLength(0); i >= 0; i--)
+                {
+                    var current = gsm.Grid[i, j].Color;
+
+
+                }
+            }
         }
 
         public void CheckForDiagDownWins()
@@ -66,8 +104,8 @@ namespace Connect4
             // TODO
         }
 
-        
-        public int FindNextAvailableSlot(int col) 
+
+        public int FindNextAvailableSlot(int col)
         {
             for (int i = 5; i >= 0; i--)
             {

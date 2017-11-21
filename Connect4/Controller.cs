@@ -12,7 +12,7 @@ namespace Connect4
         public int SelectedLocation { get; set; }
 
         private GameStateManager gsm = GameStateManager.GetInstance();
-        private UI ui = UI.GetInstance();
+        //private UI ui = UI.GetInstance();
 
         private Controller()
         {
@@ -26,12 +26,13 @@ namespace Connect4
 
             return instance;
         }
-        
 
-        public void Move()
+
+        public bool Move()
         {
             var key = Console.ReadKey().Key;
             var len = gsm.Grid.GetLength(1);
+            var placed = false;
 
             if (gsm.AcceptingInput)
             {
@@ -52,11 +53,10 @@ namespace Connect4
                 }
 
                 if (key == ConsoleKey.Enter)
-                {
-                    ui.Place(SelectedLocation);
-                }
+                    placed = true;
             }
 
+            return placed;
         }
     }
 }
